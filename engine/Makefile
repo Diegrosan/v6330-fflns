@@ -96,6 +96,30 @@ BUILD_DEBUG     = 1
 endif
 endif
 
+ifdef BUILD_LINUX_aarch64
+TARGET 	        = $(VERSION_NAME).elf
+TARGET_FINAL    = $(VERSION_NAME)
+TARGET_PLATFORM = LINUX
+BUILD_LINUX     = 1
+BUILD_SDL       = 1
+BUILD_GFX       = 1
+BUILD_PTHREAD   = 1
+BUILD_SDL_IO    = 1
+BUILD_VORBIS    = 1
+BUILD_WEBM      = 1
+BUILDING        = 1
+INCLUDES        = $(SDKPATH)/usr/include \
+                  $(SDKPATH)/usr/include/SDL2
+OBJTYPE         = elf
+LIBRARIES       = $(SDKPATH)/usr/lib
+# Workaround for GCC 9
+#CFLAGS          += -Wno-error=address -Wno-error=format-overflow -Wno-error=stringop-truncation -Wno-error=implicit-function-declaration -Wno-error=unused-variable -Wno-error=unused-label
+
+ifeq ($(BUILD_LINUX_aarch64), 0)
+BUILD_DEBUG     = 1
+endif
+endif
+
 ifdef BUILD_DARWIN
 TARGET          = $(VERSION_NAME).elf
 TARGET_FINAL    = $(VERSION_NAME)
@@ -208,7 +232,7 @@ ifdef BUILD_WIN
 STRIP 	        = strip$(EXTENSION) $(TARGET) -o $(TARGET_FINAL)
 endif
 ifdef BUILD_LINUX
-STRIP 	        = strip $(TARGET) -o $(TARGET_FINAL)
+STRIP 	        = cp $(TARGET) $(TARGET_FINAL)
 endif
 ifdef BUILD_DARWIN
 STRIP           = $(PREFIX)strip $(TARGET) -o $(TARGET_FINAL)
