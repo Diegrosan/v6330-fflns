@@ -48,6 +48,9 @@ int		skiptoset = -1;
 int spawnoverride = 999999;
 int maxentities = 999999;
 
+s_modelcache *model_cache;
+s_anim_list *anim_list;
+
 int	global_model = -1;
 #define global_model_scripts ((global_model>=0 && model_cache[global_model].model)?model_cache[global_model].model->scripts:NULL)
 
